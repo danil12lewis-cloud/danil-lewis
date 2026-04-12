@@ -1,0 +1,600 @@
+<!doctype html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Danil Lewis — Portfolio</title>
+
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            rose: {
+              accent: '#c4707a',
+              light: '#e8b4b8',
+              muted: '#f5e1e3'
+            },
+            ink: '#0a0a0a',
+            paper: '#faf8f6',
+            card: '#ffffff'
+          },
+          fontFamily: {
+            display: ['"Playfair Display"', 'Georgia', 'serif'],
+            body: ['"DM Sans"', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+
+    body {
+      box-sizing: border-box;
+    }
+
+    .skill-tag {
+      background: #0a0a0a;
+      color: #faf8f6;
+      padding: 6px 18px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .skill-tag:hover {
+      background: #c4707a;
+    }
+
+    .project-card {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #eee;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    nav a {
+      position: relative;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1.5px;
+      background: #c4707a;
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .exp-item {
+      border-left: 2px solid #e8b4b8;
+      padding-left: 1.25rem;
+    }
+
+    .exp-item::before {
+      content: '';
+      display: block;
+      width: 10px;
+      height: 10px;
+      background: #c4707a;
+      border-radius: 50%;
+      position: relative;
+      left: calc(-1.25rem - 6px);
+      top: 4px;
+      margin-bottom: -10px;
+    }
+
+    .img-frame {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 12px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #f0e6e8 0%, #e8d5d8 50%, #dcc4c8 100%);
+      border: 1px solid #ead2d6;
+      position: relative;
+    }
+
+    .img-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .img-fallback {
+      width: 100%;
+      height: 100%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      color: #b08a8f;
+      font-size: 0.85rem;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    .profile-frame {
+      width: 288px;
+      height: 384px;
+      border-radius: 24px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #f0e6e8 0%, #e8d5d8 50%, #dcc4c8 100%);
+      border: 1px solid #ead2d6;
+      position: relative;
+    }
+
+    .profile-frame img,
+    .logo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .logo-frame {
+      width: 224px;
+      height: 224px;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.05);
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .logo-fallback,
+    .profile-fallback {
+      width: 100%;
+      height: 100%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: rgba(255,255,255,0.55);
+      padding: 1rem;
+    }
+  </style>
+</head>
+
+<body class="h-full bg-paper text-ink font-body overflow-auto">
+  <div class="w-full">
+
+    <!-- Nav -->
+    <nav class="fixed top-0 left-0 w-full bg-paper/90 backdrop-blur-md z-50 border-b border-black/5">
+      <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+        <span class="font-display text-lg font-bold tracking-tight">
+          DL<span class="text-rose-accent">.</span>
+        </span>
+
+        <div class="hidden md:flex gap-8 text-sm font-medium tracking-wide">
+          <a href="#hero" class="hover:text-rose-accent transition-colors">Home</a>
+          <a href="#about" class="hover:text-rose-accent transition-colors">About</a>
+          <a href="#digital-rose" class="hover:text-rose-accent transition-colors">The Digital Rose</a>
+          <a href="#projects" class="hover:text-rose-accent transition-colors">Projects</a>
+          <a href="#contact" class="hover:text-rose-accent transition-colors">Contact</a>
+        </div>
+
+        <button id="mobile-menu-btn" class="md:hidden" aria-label="Toggle menu">
+          <i data-lucide="menu" style="width:22px;height:22px;"></i>
+        </button>
+      </div>
+
+      <div id="mobile-menu" class="md:hidden hidden px-6 pb-4 flex flex-col gap-3 text-sm font-medium">
+        <a href="#hero" class="py-1">Home</a>
+        <a href="#about" class="py-1">About</a>
+        <a href="#digital-rose" class="py-1">The Digital Rose</a>
+        <a href="#projects" class="py-1">Projects</a>
+        <a href="#contact" class="py-1">Contact</a>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <section id="hero" class="pt-32 pb-20 px-6">
+      <div class="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-12">
+        <div class="flex-1 fade-in">
+          <p class="text-rose-accent font-medium text-sm tracking-widest uppercase mb-4">Portfolio</p>
+
+          <h1 class="font-display text-5xl md:text-7xl font-bold leading-tight mb-4">
+            Danil<br />
+            Lewis<span class="text-rose-accent">.</span>
+          </h1>
+
+          <p class="text-lg text-ink/70 font-medium mb-3">
+            UI Designer · Application Developer · IT Student
+          </p>
+
+          <p class="text-lg text-ink/60 max-w-xl mb-8 leading-relaxed font-light">
+            Building innovative, user-focused digital solutions for education and community impact
+          </p>
+
+          <div class="flex flex-wrap gap-4">
+            <a href="#projects" class="bg-ink text-paper px-6 py-3 rounded-full text-sm font-semibold hover:bg-rose-accent transition-colors">
+              View Projects
+            </a>
+            <a href="#contact" class="border border-ink/20 px-6 py-3 rounded-full text-sm font-semibold hover:border-rose-accent hover:text-rose-accent transition-colors">
+              Contact
+            </a>
+            <a
+  href="https://www.linkedin.com/in/danil-lewis-72b17815b/"
+  target="_blank"
+  rel="noopener noreferrer"
+  class="border border-ink/20 px-6 py-3 rounded-full text-sm font-semibold hover:border-rose-accent hover:text-rose-accent transition-colors"
+>
+  LinkedIn
+</a>
+          </div>
+        </div>
+
+        <div class="flex-shrink-0 fade-in">
+          <div class="profile-frame">
+            <img
+              src="portrait.png"
+              alt="Danil Lewis portrait"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+            />
+            <div class="profile-fallback">
+              Insert Profile Photo<br />
+              File name: <strong>portrait.png</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="py-20 px-6">
+      <div class="max-w-6xl mx-auto fade-in">
+        <p class="text-rose-accent text-sm tracking-widest uppercase font-medium mb-3">Background</p>
+        <h2 class="font-display text-3xl md:text-4xl font-bold mb-8">About Me</h2>
+
+        <div class="flex flex-col lg:flex-row gap-12">
+          <p class="flex-1 text-ink/60 leading-relaxed text-base max-w-2xl">
+            I am an IT student at St. George’s University with a strong background in mathematics, UI design, and application development. I have over 10 years of experience tutoring mathematics and developing structured learning content. I am passionate about building digital solutions that improve education and digital experiences through clean, practical, and user-focused design.
+          </p>
+
+          <div class="flex-1">
+            <h3 class="font-display text-xl font-semibold mb-5">Skills</h3>
+            <div class="flex flex-wrap gap-3">
+              <span class="skill-tag">UI/UX Design</span>
+              <span class="skill-tag">Application Development</span>
+              <span class="skill-tag">Game Development</span>
+              <span class="skill-tag">HTML / CSS / JS</span>
+              <span class="skill-tag">Python</span>
+              <span class="skill-tag">Excel & Data Analysis</span>
+              <span class="skill-tag">Networking</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Digital Rose -->
+    <section id="digital-rose" class="py-20 px-6 bg-ink text-paper">
+      <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12 fade-in">
+        <div class="logo-frame">
+          <img
+            src="DR logo.png"
+            alt="The Digital Rose logo"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+          />
+          <div class="logo-fallback">
+            Insert Digital Rose Logo<br />
+            File name: <strong>DR logo.png</strong>
+          </div>
+        </div>
+
+        <div class="flex-1">
+          <p class="text-rose-accent text-sm tracking-widest uppercase font-medium mb-3">Featured Initiative</p>
+          <h2 class="font-display text-3xl md:text-4xl font-bold mb-2">The Digital Rose</h2>
+          <p class="text-rose-accent text-sm mb-4">Founder & Creator</p>
+          <p class="text-paper/60 leading-relaxed max-w-xl">
+            The Digital Rose is a platform created by Danil Lewis, focused on developing applications and data-driven solutions to solve local and regional challenges through innovation and design.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience -->
+    <section class="py-16 px-6 bg-white">
+      <div class="max-w-6xl mx-auto fade-in">
+        <p class="text-rose-accent text-sm tracking-widest uppercase font-medium mb-3">Career</p>
+        <h2 class="font-display text-3xl md:text-4xl font-bold mb-10">Experience</h2>
+
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="exp-item">
+            <h3 class="font-semibold text-lg">UI Designer</h3>
+            <p class="text-ink/50 text-sm mt-1">
+              Crafting intuitive, accessible interfaces for web and mobile applications.
+            </p>
+          </div>
+
+          <div class="exp-item">
+            <h3 class="font-semibold text-lg">Application Developer</h3>
+            <p class="text-ink/50 text-sm mt-1">
+              Building structured digital products and functional user-centered systems.
+            </p>
+          </div>
+
+          <div class="exp-item">
+            <h3 class="font-semibold text-lg">Math Tutor — 10+ Years</h3>
+            <p class="text-ink/50 text-sm mt-1">
+              Developing structured learning support for students across multiple levels.
+            </p>
+          </div>
+
+          <div class="exp-item">
+            <h3 class="font-semibold text-lg">IT Support / School Assistant</h3>
+            <p class="text-ink/50 text-sm mt-1">
+              Supporting technical systems and digital tools in educational environments.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="py-20 px-6">
+      <div class="max-w-6xl mx-auto">
+        <div class="fade-in mb-12">
+          <p class="text-rose-accent text-sm tracking-widest uppercase font-medium mb-3">Work</p>
+          <h2 class="font-display text-3xl md:text-4xl font-bold">Projects</h2>
+        </div>
+
+        <div class="space-y-16">
+
+          <!-- Nutmeg Academy -->
+          <div class="project-card fade-in">
+            <div class="p-6 md:p-8">
+              <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-2 mb-4">
+                <h3 class="font-display text-2xl font-bold">Nutmeg Academy</h3>
+                <div class="flex flex-wrap gap-2">
+                  <span class="text-xs bg-rose-muted text-rose-accent px-3 py-1 rounded-full font-medium">UI/UX</span>
+                  <span class="text-xs bg-rose-muted text-rose-accent px-3 py-1 rounded-full font-medium">HTML/CSS/JS</span>
+                  <span class="text-xs bg-rose-muted text-rose-accent px-3 py-1 rounded-full font-medium">Game Dev</span>
+                </div>
+              </div>
+
+              <p class="text-ink/50 mb-6 max-w-2xl">
+                An interactive educational platform designed to deliver engaging learning experiences through structured lessons, visual design, and educational games.
+              </p>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="img-frame">
+                  <img src="Nutmegacademy2.png" alt="Nutmeg Academy screenshot 1" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                  <div class="img-fallback">Nutmeg Academy Screenshot 1<br /><strong>Nutmegacademy1.png</strong></div>
+                </div>
+                <div class="img-frame">
+                  <img src="Nutmegacademy1.png" alt="Nutmeg Academy screenshot 2" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                  <div class="img-fallback">Nutmeg Academy Screenshot 2<br /><strong>Nutmegacademy2.png</strong></div>
+                </div>
+                <div class="img-frame">
+                  <img src="Nutmegacademy3.png" alt="Nutmeg Academy screenshot 3" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                  <div class="img-fallback">Nutmeg Academy Screenshot 3<br /><strong>Nutmegacademy3.png</strong></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Green Connect -->
+          <div class="project-card fade-in">
+            <div class="p-6 md:p-8">
+              <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-2 mb-4">
+                <h3 class="font-display text-2xl font-bold">Green Connect</h3>
+                <div class="flex flex-wrap gap-2">
+                  <span class="text-xs bg-rose-muted text-rose-accent px-3 py-1 rounded-full font-medium">Web Design</span>
+                  <span class="text-xs bg-rose-muted text-rose-accent px-3 py-1 rounded-full font-medium">UI Design</span>
+                  <span class="text-xs bg-rose-muted text-rose-accent px-3 py-1 rounded-full font-medium">HTML/CSS</span>
+                </div>
+              </div>
+
+              <p class="text-ink/50 mb-6 max-w-2xl">
+                A web platform designed to connect users with food services through a clean, structured, and user-friendly interface.
+              </p>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="img-frame">
+                  <img src="GreenConnect1.png" alt="Green Connect screenshot 1" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                  <div class="img-fallback">Green Connect Screenshot 1<br /><strong>GreenConnect1.png</strong></div>
+                </div>
+                <div class="img-frame">
+                  <img src="GreenConnect2.png" alt="Green Connect screenshot 2" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                  <div class="img-fallback">Green Connect Screenshot 2<br /><strong>GreenConnect2.png</strong></div>
+                </div>
+                <div class="img-frame">
+                  <img src="GreenConnect3.png" alt="Green Connect screenshot 3" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                  <div class="img-fallback">Green Connect Screenshot 3<br /><strong>GreenConnect3.png</strong></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Food Passport -->
+          <div class="project-card fade-in">
+            <div class="p-6 md:p-8">
+              <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-2 mb-4">
+                <h3 class="font-display text-2xl font-bold">Food Passport</h3>
+                <div class="flex flex-wrap gap-2">
+                  <span class="text-xs bg-rose-muted text-rose-accent px-3 py-1 rounded-full font-medium">App Dev</span>
+                  <span class="text-xs bg-rose-muted text-rose-accent px-3 py-1 rounded-full font-medium">UI Design</span>
+                  <span class="text-xs bg-rose-muted text-rose-accent px-3 py-1 rounded-full font-medium">Product Concept</span>
+                </div>
+              </div>
+
+              <p class="text-ink/50 mb-6 max-w-2xl">
+                A digital product concept centered on food discovery, local cuisine experiences, and a clean user journey across multiple screens.
+              </p>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="img-frame">
+                  <img src="GlobalKitchen1.png" alt="Food Passport screenshot 1" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                  <div class="img-fallback">Food Passport Screenshot 1<br /><strong>GlobalKitchen1.png</strong></div>
+                </div>
+                <div class="img-frame">
+                  <img src="GlobalKitchen2.png" alt="Food Passport screenshot 2" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                  <div class="img-fallback">Food Passport Screenshot 2<br /><strong>GlobalKitchen2.png</strong></div>
+                </div>
+                <div class="img-frame">
+                  <img src="GlobalKitchen3.png" alt="Food Passport screenshot 3" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                  <div class="img-fallback">Food Passport Screenshot 3<br /><strong>GlobalKitchen3.png</strong></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Agritech -->
+          <div class="project-card fade-in">
+            <div class="p-6 md:p-8">
+              <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-2 mb-4">
+                <h3 class="font-display text-2xl font-bold">Agritech</h3>
+                <div class="flex flex-wrap gap-2">
+                  <span class="text-xs bg-rose-muted text-rose-accent px-3 py-1 rounded-full font-medium">Website Design</span>
+                  <span class="text-xs bg-rose-muted text-rose-accent px-3 py-1 rounded-full font-medium">UI/UX</span>
+                  <span class="text-xs bg-rose-muted text-rose-accent px-3 py-1 rounded-full font-medium">Concept Design</span>
+                </div>
+              </div>
+
+              <p class="text-ink/50 mb-6 max-w-2xl">
+                A website design concept for agricultural technology, focused on structure, clarity, and modern digital experiences for farming and data-driven solutions.
+              </p>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="img-frame">
+                  <img src="Agritech1.png" alt="Agritech screenshot 1" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                  <div class="img-fallback">Agritech Screenshot 1<br /><strong>Agritech1.png</strong></div>
+                </div>
+                <div class="img-frame">
+                  <img src="Agritech2.png" alt="Agritech screenshot 2" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                  <div class="img-fallback">Agritech Screenshot 2<br /><strong>Agritech2.png</strong></div>
+                </div>
+                <div class="img-frame">
+                  <img src="Agritech3.png" alt="Agritech screenshot 3" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                  <div class="img-fallback">Agritech Screenshot 3<br /><strong>Agritech3.png</strong></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="py-20 px-6 bg-ink text-paper">
+      <div class="max-w-6xl mx-auto fade-in">
+        <p class="text-rose-accent text-sm tracking-widest uppercase font-medium mb-3">Get in Touch</p>
+        <h2 class="font-display text-3xl md:text-4xl font-bold mb-10">Contact</h2>
+
+        <div class="grid md:grid-cols-4 gap-8">
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">
+              <i data-lucide="mail" style="width:18px;height:18px;color:#c4707a;"></i>
+            </div>
+            <div>
+              <p class="text-paper/40 text-sm mb-1">Email</p>
+              <p class="font-medium text-sm">danil12lewis@gmail.com</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">
+              <i data-lucide="phone" style="width:18px;height:18px;color:#c4707a;"></i>
+            </div>
+            <div>
+              <p class="text-paper/40 text-sm mb-1">Phone</p>
+              <p class="font-medium text-sm">14735378068</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">
+              <i data-lucide="map-pin" style="width:18px;height:18px;color:#c4707a;"></i>
+            </div>
+            <div>
+              <p class="text-paper/40 text-sm mb-1">Location</p>
+              <p class="font-medium text-sm">Concord St, John, Grenada</p>
+            </div>
+          </div>
+
+         <div class="flex items-start gap-4">
+  <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">
+    <i data-lucide="linkedin" style="width:18px;height:18px;color:#c4707a;"></i>
+  </div>
+
+  <div>
+    <p class="text-paper/40 text-sm mb-1">LinkedIn</p>
+    <a href="https://www.linkedin.com/in/danil-lewis-72b17815b" 
+       target="_blank" 
+       class="font-medium text-sm underline hover:text-rose-accent">
+       linkedin.com/in/danil-lewis-72b17815b
+    </a>
+  </div>
+</div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-6 px-6 bg-ink border-t border-white/5">
+      <div class="max-w-6xl mx-auto text-center">
+        <p class="text-paper/30 text-xs">© 2026 Danil Lewis. All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Mobile menu
+    document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+    });
+
+    document.querySelectorAll('#mobile-menu a').forEach(a => {
+      a.addEventListener('click', () => {
+        document.getElementById('mobile-menu').classList.add('hidden');
+      });
+    });
+
+    // Scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Lucide icons
+    lucide.createIcons();
+  </script>
+</body>
+</html>
